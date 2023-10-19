@@ -18,25 +18,31 @@ class StockDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(company.name),
-      subtitle: FutureBuilder<PriceData>(
-        future: fetchCompanyData(company.symbol),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text(
-              "Loading....",
-              style: TextStyle(fontSize: 14),
-            );
-          } else {
-            final data = snapshot.data;
-            if (data != null && data.price.isNotEmpty) {
-              return Text(data.price);
-            } else {
-              return Text('No data found');
-            }
-          }
-        },
+      title: Text(company.company),
+      subtitle: Column(
+        children: [
+          Text(company.symbol),
+          Text(company.type)
+        ],
       ),
+      // subtitle: FutureBuilder<PriceData>(
+      //   future: fetchCompanyData(company.symbol),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.waiting) {
+      //       return Text(
+      //         "Loading....",
+      //         style: TextStyle(fontSize: 14),
+      //       );
+      //     } else {
+      //       final data = snapshot.data;
+      //       if (data != null && data.price.isNotEmpty) {
+      //         return Text(data.price);
+      //       } else {
+      //         return Text('No data found');
+      //       }
+      //     }
+      //   },
+      // ),
       trailing: GestureDetector(
         child: Icon(Icons.add_circle_outline_outlined),
         onTap: () {
@@ -57,13 +63,14 @@ class StockDataWidget extends StatelessWidget {
 
     try {
       final stock = SavedStockModel(
-        companyName: company.name,
+        companyName: company.company,
         companySymbol: company.symbol,
+        companyType: company.type
         // id: DateTime.now().microsecondsSinceEpoch,
       );
       context.read<SavedStockProvider>().addStocks(stock);
     } catch (e) {
-      print(e);
+      print(e.runtimeType);
     }
   }
 

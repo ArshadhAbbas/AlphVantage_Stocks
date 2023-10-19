@@ -1,16 +1,19 @@
 class StockData {
-  final String name;
+  final String type;
   final String symbol;
+  final String company;
 
   StockData({
-    required this.name,
+    required this.type,
     required this.symbol,
+    required this.company,
   });
 
   factory StockData.fromJson(Map<String, dynamic> json) {
     return StockData(
-      name: json['2. name'] ?? '',
-      symbol: json['1. symbol'] ?? '',
+      type: json['type'] ?? '',
+      symbol: json['symbol'] ?? '',
+      company: json['company']?? '',
     );
   }
 }

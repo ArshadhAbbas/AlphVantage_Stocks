@@ -19,6 +19,7 @@ class SavedStockModelAdapter extends TypeAdapter<SavedStockModel> {
     return SavedStockModel(
       companyName: fields[1] as String,
       companySymbol: fields[2] as String,
+      companyType: fields[3] as String,
       id: fields[0] as int?,
     );
   }
@@ -26,13 +27,15 @@ class SavedStockModelAdapter extends TypeAdapter<SavedStockModel> {
   @override
   void write(BinaryWriter writer, SavedStockModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.companyName)
       ..writeByte(2)
-      ..write(obj.companySymbol);
+      ..write(obj.companySymbol)
+      ..writeByte(3)
+      ..write(obj.companyType);
   }
 
   @override

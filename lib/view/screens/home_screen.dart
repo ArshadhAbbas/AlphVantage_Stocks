@@ -143,23 +143,25 @@ class _SearchScreenState extends State<SearchScreen> {
           (X509Certificate cert, String host, int port) => true;
       final http = IOClient(ioc);
       final apiUrl =
-          'https://www.alphavantage.co/query?function=$function&keywords=$keyword&apikey=$apiKey';
+          'https://dev.portal.tradebrains.in/api/search?keyword=Reliance';
 
       final response = await http.get(Uri.parse(apiUrl));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        if (data['bestMatches'] != null) {
-          final matches = List<Map<String, dynamic>>.from(data['bestMatches']);
+        if (data != null) {
+          final matches = List<Map<String, dynamic>>.from(data);
           final stockData =
               matches.map((match) => StockData.fromJson(match)).toList();
           Provider.of<SearchDataProvider>(context, listen: false)
               .changeSearchData(stockData);
-        } else {
+        }
+         else {
           Provider.of<SearchDataProvider>(context, listen: false)
               .removeSearchData();
         }
-      } else {
+      } 
+      else {
         print("Failed to fetch data. Status code: ${response.statusCode}");
       }
     } catch (e) {

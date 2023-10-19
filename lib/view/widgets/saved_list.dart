@@ -25,19 +25,26 @@ class ListStocks extends StatelessWidget {
                       padding: const EdgeInsets.all(15.0),
                       child: ListTile(
                         title: Text(data.companyName),
-                        subtitle: FutureBuilder<PriceData>(
-                          future: fetchCompanyData(data.companySymbol),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Text("Loading...");
-                            } else if (snapshot.hasData) {
-                              final priceData = snapshot.data!;
-                              return Text(priceData.price);
-                            } else {
-                              return Text("Price not available");
-                            }
-                          },
+                        subtitle: Column(
+                          children: [
+                            Text(data.companySymbol),
+                            Text(data.companyType)
+                          ],
                         ),
+
+                        // subtitle: FutureBuilder<PriceData>(
+                        //   future: fetchCompanyData(data.companySymbol),
+                        //   builder: (context, snapshot) {
+                        //     if (snapshot.connectionState == ConnectionState.waiting) {
+                        //       return Text("Loading...");
+                        //     } else if (snapshot.hasData) {
+                        //       final priceData = snapshot.data!;
+                        //       return Text(priceData.price);
+                        //     } else {
+                        //       return Text("Price not available");
+                        //     }
+                        //   },
+                        // ),
                         trailing: IconButton(
                           onPressed: () {
                             showDialog(
